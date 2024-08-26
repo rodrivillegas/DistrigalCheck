@@ -1,12 +1,11 @@
 {
   "builds": [
     {
-      "src": "dist/**",
-      "use": "@vercel/static-build"
-    },
-    {
-      "src": "functions/**",
-      "use": "@vercel/node"
+      "src": "dist/index.html",
+      "use": "@vercel/static",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "rewrites": [
