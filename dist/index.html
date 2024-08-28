@@ -1,1 +1,571 @@
-<!DOCTYPE html><html lang="es-ES"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" type="text/css" href="/index.e0a28dc4.css"><title>Inspección de Vehículos</title></head><body> <div id="videoContainer" style="border:solid #004d40;border-radius:.8rem;width:90%;height:280px;margin-top:2rem;margin-left:auto;margin-right:auto;display:none;box-shadow:0 4px 8px #0003"> <video id="video" width="100%" height="100%" autoplay style="object-fit:cover"></video> </div> <div id="scanResult"></div>  <div id="intro" class="intro"> <h1> Bienvenido a la App de Chequeo de Seguridad para Vehículos Livianos </h1> <button id="startButton">Comenzar</button> </div>  <div id="auth" class="auth hidden"> <h2>Autenticación</h2> <form id="authForm"> <label for="email">Correo Electrónico:</label> <input type="email" id="email" required> <label for="password">Contraseña:</label> <input type="password" id="password" required> <button type="submit">Iniciar Sesión</button> </form> <p> ¿No tienes cuenta? <button id="registerButton">Regístrate aquí</button> </p> </div>  <div id="register" class="auth hidden"> <h2>Registro de Usuario</h2> <form id="registerForm"> <label for="regName">Nombre y Apellido:</label> <input type="text" id="regName" required> <label for="regDni">DNI:</label> <input type="number" id="regDni" required> <label for="regEmail">Correo Electrónico:</label> <input type="email" id="regEmail" required> <label for="regPassword">Contraseña:</label> <input type="password" id="regPassword" required> <button type="submit">Registrarse</button> </form> <p> ¿Ya tienes cuenta? <button id="loginButton">Inicia sesión aquí</button> </p> </div>  <div id="inspection" class="auth hidden"> <h2>Inspección de Vehículo</h2> <p id="vehicleInfo">Escanea el código QR del vehículo para comenzar:</p> <input type="file" id="fileInput" accept="image/*" style="display:none"> <button id="scanButton">Escanear QR</button> <div id="scanResult"></div>  <div id="questionnaire" class="hidden"> <h2>Check List</h2> <h3>Califique a continuación el Estado del Vehículo 📝</h3> <form id="inspectionForm" class="formulario"> <label for="driverRecord">Registro de conductor acorde al vehículo:</label> <div class="estiloInputs"> <input type="radio" id="driverRecordGood" name="driverRecord" value="BIEN" required> <label for="driverRecordGood">BIEN</label> <input type="radio" id="driverRecordFix" name="driverRecord" value="CORREGIR" required> <label for="driverRecordFix">CORREGIR</label> </div> <br><br>  <label for="greenCard">Cédula verde:</label> <div class="estiloInputs"> <input type="radio" id="greenCardGood" name="greenCard" value="BIEN" required> <label for="greenCardGood">BIEN</label> <input type="radio" id="greenCardFix" name="greenCard" value="CORREGIR" required> <label for="greenCardFix">CORREGIR</label> </div> <br><br>  <label for="insurancePolicy">Póliza seguro / Último recibo de pago:</label> <div class="estiloInputs"> <input type="radio" id="insurancePolicyGood" name="insurancePolicy" value="BIEN" required> <label for="insurancePolicyGood">BIEN</label> <input type="radio" id="insurancePolicyFix" name="insurancePolicy" value="CORREGIR" required> <label for="insurancePolicyFix">CORREGIR</label> </div> <br><br>  <label for="rto">Revisión técnica Vehicular en Vigencia (RTO):</label> <div class="estiloInputs"> <input type="radio" id="rtoGood" name="rto" value="BIEN" required> <label for="rtoGood">BIEN</label> <input type="radio" id="rtoFix" name="rto" value="CORREGIR" required> <label for="rtoFix">CORREGIR</label> </div> <br><br>  <label for="brakes">Frenos:</label> <div class="estiloInputs"> <input type="radio" id="brakesGood" name="brakes" value="BIEN" required> <label for="brakesGood">BIEN</label> <input type="radio" id="brakesFix" name="brakes" value="CORREGIR" required> <label for="brakesFix">CORREGIR</label> </div> <br><br>  <label for="handBrake">Freno de mano en funcionamiento:</label> <div class="estiloInputs"> <input type="radio" id="handBrakeGood" name="handBrake" value="BIEN" required> <label for="handBrakeGood">BIEN</label> <input type="radio" id="handBrakeFix" name="handBrake" value="CORREGIR" required> <label for="handBrakeFix">CORREGIR</label> </div> <br><br>  <label for="tires">Estado de las cubiertas y cubierta de auxilio:</label> <div class="estiloInputs"> <input type="radio" id="tiresGood" name="tires" value="BIEN" required> <label for="tiresGood">BIEN</label> <input type="radio" id="tiresFix" name="tires" value="CORREGIR" required> <label for="tiresFix">CORREGIR</label> </div> <br><br>  <label for="windshield">Estado de los parabrisas:</label> <div class="estiloInputs"> <input type="radio" id="windshieldGood" name="windshield" value="BIEN" required> <label for="windshieldGood">BIEN</label> <input type="radio" id="windshieldFix" name="windshield" value="CORREGIR" required> <label for="windshieldFix">CORREGIR</label> </div> <br><br>  <label for="mirrors">Espejos laterales externos (2) y espejo central interno (1):</label> <div class="estiloInputs"> <input type="radio" id="mirrorsGood" name="mirrors" value="BIEN" required> <label for="mirrorsGood">BIEN</label> <input type="radio" id="mirrorsFix" name="mirrors" value="CORREGIR" required> <label for="mirrorsFix">CORREGIR</label> </div> <br><br>  <label for="wipers">Limpia parabrisas y lava parabrisas en funcionamiento:</label> <div class="estiloInputs"> <input type="radio" id="wipersGood" name="wipers" value="BIEN" required> <label for="wipersGood">BIEN</label> <input type="radio" id="wipersFix" name="wipers" value="CORREGIR" required> <label for="wipersFix">CORREGIR</label> </div> <br><br>  <label for="headlights">Luces altas y bajas:</label> <div class="estiloInputs"> <input type="radio" id="headlightsGood" name="headlights" value="BIEN" required> <label for="headlightsGood">BIEN</label> <input type="radio" id="headlightsFix" name="headlights" value="CORREGIR" required> <label for="headlightsFix">CORREGIR</label> </div> <br><br>  <label for="positionLights">Luces de posición, delanteras y traseras:</label> <div class="estiloInputs"> <input type="radio" id="positionLightsGood" name="positionLights" value="BIEN" required> <label for="positionLightsGood">BIEN</label> <input type="radio" id="positionLightsFix" name="positionLights" value="CORREGIR" required> <label for="positionLightsFix">CORREGIR</label> </div> <br><br>  <label for="brakeLights">Luces de frenos y giros:</label> <div class="estiloInputs"> <input type="radio" id="brakeLightsGood" name="brakeLights" value="BIEN" required> <label for="brakeLightsGood">BIEN</label> <input type="radio" id="brakeLightsFix" name="brakeLights" value="CORREGIR" required> <label for="brakeLightsFix">CORREGIR</label> </div> <br><br>  <label for="reverseLights">Luz de retroceso y bocina (si corresponde):</label> <div class="estiloInputs"> <input type="radio" id="reverseLightsGood" name="reverseLights" value="BIEN" required> <label for="reverseLightsGood">BIEN</label> <input type="radio" id="reverseLightsFix" name="reverseLights" value="CORREGIR" required> <label for="reverseLightsFix">CORREGIR</label> </div> <br><br>  <label for="seatBelts">Cinturón de seguridad inerciales en todos los asientos:</label> <div class="estiloInputs"> <input type="radio" id="seatBeltsGood" name="seatBelts" value="BIEN" required> <label for="seatBeltsGood">BIEN</label> <input type="radio" id="seatBeltsFix" name="seatBelts" value="CORREGIR" required> <label for="seatBeltsFix">CORREGIR</label> </div> <br><br>  <label for="headrests">Apoya cabezas en todos los asientos:</label> <div class="estiloInputs"> <input type="radio" id="headrestsGood" name="headrests" value="BIEN" required> <label for="headrestsGood">BIEN</label> <input type="radio" id="headrestsFix" name="headrests" value="CORREGIR" required> <label for="headrestsFix">CORREGIR</label> </div> <br><br>  <label for="extinguisher">Extintor vigente 5kg PQSP ABC según corresponda:</label> <div class="estiloInputs"> <input type="radio" id="extinguisherGood" name="extinguisher" value="BIEN" required> <label for="extinguisherGood">BIEN</label> <input type="radio" id="extinguisherFix" name="extinguisher" value="CORREGIR" required> <label for="extinguisherFix">CORREGIR</label> </div> <br><br>  <label for="emergencyKit">Baliza triángulo, Botiquín, Linterna, Cuarta remolque rígida:</label> <div class="estiloInputs"> <input type="radio" id="emergencyKitGood" name="emergencyKit" value="BIEN" required> <label for="emergencyKitGood">BIEN</label> <input type="radio" id="emergencyKitFix" name="emergencyKit" value="CORREGIR" required> <label for="emergencyKitFix">CORREGIR</label> </div> <br><br>  <label for="interiorCleanliness">Orden y Limpieza en el interior de la cabina:</label> <div class="estiloInputs"> <input type="radio" id="interiorCleanlinessGood" name="interiorCleanliness" value="BIEN" required> <label for="interiorCleanlinessGood">BIEN</label> <input type="radio" id="interiorCleanlinessFix" name="interiorCleanliness" value="CORREGIR" required> <label for="interiorCleanlinessFix">CORREGIR</label> </div> <br><br>  <label for="engineOil">Aceite Motor:</label> <div class="estiloInputs"> <input type="radio" id="engineOilGood" name="engineOil" value="BIEN" required> <label for="engineOilGood">BIEN</label> <input type="radio" id="engineOilFix" name="engineOil" value="CORREGIR" required> <label for="engineOilFix">CORREGIR</label> </div> <br><br>  <label for="hydraulicOil">Aceite Hidráulico:</label> <div class="estiloInputs"> <input type="radio" id="hydraulicOilGood" name="hydraulicOil" value="BIEN" required> <label for="hydraulicOilGood">BIEN</label> <input type="radio" id="hydraulicOilFix" name="hydraulicOil" value="CORREGIR" required> <label for="hydraulicOilFix">CORREGIR</label> </div> <br><br>  <label for="coolant">Líquido Refrigerante:</label> <div class="estiloInputs"> <input type="radio" id="coolantGood" name="coolant" value="BIEN" required> <label for="coolantGood">BIEN</label> <input type="radio" id="coolantFix" name="coolant" value="CORREGIR" required> <label for="coolantFix">CORREGIR</label> </div> <br><br>  <label for="gps">GPS / VIGIA:</label> <div class="estiloInputs"> <input type="radio" id="gpsGood" name="gps" value="BIEN" required> <label for="gpsGood">BIEN</label> <input type="radio" id="gpsFix" name="gps" value="CORREGIR" required> <label for="gpsFix">CORREGIR</label> </div> <br><br> <button type="submit" style="margin-bottom:2rem">Enviar Inspección</button> </form> </div> </div> <footer class="footer"> <p>&copy; 2024 DISTRIGAL S.R.L. - Todos los derechos reservados.</p> </footer>  <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-app.js"></script> <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-auth.js"></script>  <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>  <script type="module" src="/index.631db0a4.js"></script> <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> </body></html>
+<!DOCTYPE html>
+<html lang="es-ES">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="index.e0a28dc4.css" />
+    <title>Inspección de Vehículos</title>
+  </head>
+  <body>
+    <div
+      id="videoContainer"
+      style="
+        border: solid #004d40;
+        border-radius: 0.8rem;
+        width: 90%;
+        height: 280px;
+        margin-top: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: none;
+        box-shadow: 0 4px 8px #0003;
+      "
+    >
+      <video
+        id="video"
+        width="100%"
+        height="100%"
+        autoplay
+        style="object-fit: cover"
+      ></video>
+    </div>
+    <div id="scanResult"></div>
+    <div id="intro" class="intro">
+      <h1>
+        Bienvenido a la App de Chequeo de Seguridad para Vehículos Livianos
+      </h1>
+      <button id="startButton">Comenzar</button>
+    </div>
+    <div id="auth" class="auth hidden">
+      <h2>Autenticación</h2>
+      <form id="authForm">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" required />
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" required />
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <p>
+        ¿No tienes cuenta? <button id="registerButton">Regístrate aquí</button>
+      </p>
+    </div>
+    <div id="register" class="auth hidden">
+      <h2>Registro de Usuario</h2>
+      <form id="registerForm">
+        <label for="regName">Nombre y Apellido:</label>
+        <input type="text" id="regName" required />
+        <label for="regDni">DNI:</label>
+        <input type="number" id="regDni" required />
+        <label for="regEmail">Correo Electrónico:</label>
+        <input type="email" id="regEmail" required />
+        <label for="regPassword">Contraseña:</label>
+        <input type="password" id="regPassword" required />
+        <button type="submit">Registrarse</button>
+      </form>
+      <p>
+        ¿Ya tienes cuenta? <button id="loginButton">Inicia sesión aquí</button>
+      </p>
+    </div>
+    <div id="inspection" class="auth hidden">
+      <h2>Inspección de Vehículo</h2>
+      <p id="vehicleInfo">Escanea el código QR del vehículo para comenzar:</p>
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+        style="display: none"
+      />
+      <button id="scanButton">Escanear QR</button>
+      <div id="scanResult"></div>
+      <div id="questionnaire" class="hidden">
+        <h2>Check List</h2>
+        <h3>Califique a continuación el Estado del Vehículo 📝</h3>
+        <form id="inspectionForm" class="formulario">
+          <label for="driverRecord"
+            >Registro de conductor acorde al vehículo:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="driverRecordGood"
+              name="driverRecord"
+              value="BIEN"
+              required
+            />
+            <label for="driverRecordGood">BIEN</label>
+            <input
+              type="radio"
+              id="driverRecordFix"
+              name="driverRecord"
+              value="CORREGIR"
+              required
+            />
+            <label for="driverRecordFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="greenCard">Cédula verde:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="greenCardGood"
+              name="greenCard"
+              value="BIEN"
+              required
+            />
+            <label for="greenCardGood">BIEN</label>
+            <input
+              type="radio"
+              id="greenCardFix"
+              name="greenCard"
+              value="CORREGIR"
+              required
+            />
+            <label for="greenCardFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="insurancePolicy"
+            >Póliza seguro / Último recibo de pago:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="insurancePolicyGood"
+              name="insurancePolicy"
+              value="BIEN"
+              required
+            />
+            <label for="insurancePolicyGood">BIEN</label>
+            <input
+              type="radio"
+              id="insurancePolicyFix"
+              name="insurancePolicy"
+              value="CORREGIR"
+              required
+            />
+            <label for="insurancePolicyFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="rto">Revisión técnica Vehicular en Vigencia (RTO):</label>
+          <div class="estiloInputs">
+            <input type="radio" id="rtoGood" name="rto" value="BIEN" required />
+            <label for="rtoGood">BIEN</label>
+            <input
+              type="radio"
+              id="rtoFix"
+              name="rto"
+              value="CORREGIR"
+              required
+            />
+            <label for="rtoFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="brakes">Frenos:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="brakesGood"
+              name="brakes"
+              value="BIEN"
+              required
+            />
+            <label for="brakesGood">BIEN</label>
+            <input
+              type="radio"
+              id="brakesFix"
+              name="brakes"
+              value="CORREGIR"
+              required
+            />
+            <label for="brakesFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="handBrake">Freno de mano en funcionamiento:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="handBrakeGood"
+              name="handBrake"
+              value="BIEN"
+              required
+            />
+            <label for="handBrakeGood">BIEN</label>
+            <input
+              type="radio"
+              id="handBrakeFix"
+              name="handBrake"
+              value="CORREGIR"
+              required
+            />
+            <label for="handBrakeFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="tires"
+            >Estado de las cubiertas y cubierta de auxilio:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="tiresGood"
+              name="tires"
+              value="BIEN"
+              required
+            />
+            <label for="tiresGood">BIEN</label>
+            <input
+              type="radio"
+              id="tiresFix"
+              name="tires"
+              value="CORREGIR"
+              required
+            />
+            <label for="tiresFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="windshield">Estado de los parabrisas:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="windshieldGood"
+              name="windshield"
+              value="BIEN"
+              required
+            />
+            <label for="windshieldGood">BIEN</label>
+            <input
+              type="radio"
+              id="windshieldFix"
+              name="windshield"
+              value="CORREGIR"
+              required
+            />
+            <label for="windshieldFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="mirrors"
+            >Espejos laterales externos (2) y espejo central interno (1):</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="mirrorsGood"
+              name="mirrors"
+              value="BIEN"
+              required
+            />
+            <label for="mirrorsGood">BIEN</label>
+            <input
+              type="radio"
+              id="mirrorsFix"
+              name="mirrors"
+              value="CORREGIR"
+              required
+            />
+            <label for="mirrorsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="wipers"
+            >Limpia parabrisas y lava parabrisas en funcionamiento:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="wipersGood"
+              name="wipers"
+              value="BIEN"
+              required
+            />
+            <label for="wipersGood">BIEN</label>
+            <input
+              type="radio"
+              id="wipersFix"
+              name="wipers"
+              value="CORREGIR"
+              required
+            />
+            <label for="wipersFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="headlights">Luces altas y bajas:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="headlightsGood"
+              name="headlights"
+              value="BIEN"
+              required
+            />
+            <label for="headlightsGood">BIEN</label>
+            <input
+              type="radio"
+              id="headlightsFix"
+              name="headlights"
+              value="CORREGIR"
+              required
+            />
+            <label for="headlightsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="positionLights"
+            >Luces de posición, delanteras y traseras:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="positionLightsGood"
+              name="positionLights"
+              value="BIEN"
+              required
+            />
+            <label for="positionLightsGood">BIEN</label>
+            <input
+              type="radio"
+              id="positionLightsFix"
+              name="positionLights"
+              value="CORREGIR"
+              required
+            />
+            <label for="positionLightsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="brakeLights">Luces de frenos y giros:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="brakeLightsGood"
+              name="brakeLights"
+              value="BIEN"
+              required
+            />
+            <label for="brakeLightsGood">BIEN</label>
+            <input
+              type="radio"
+              id="brakeLightsFix"
+              name="brakeLights"
+              value="CORREGIR"
+              required
+            />
+            <label for="brakeLightsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="reverseLights"
+            >Luz de retroceso y bocina (si corresponde):</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="reverseLightsGood"
+              name="reverseLights"
+              value="BIEN"
+              required
+            />
+            <label for="reverseLightsGood">BIEN</label>
+            <input
+              type="radio"
+              id="reverseLightsFix"
+              name="reverseLights"
+              value="CORREGIR"
+              required
+            />
+            <label for="reverseLightsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="seatBelts"
+            >Cinturón de seguridad inerciales en todos los asientos:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="seatBeltsGood"
+              name="seatBelts"
+              value="BIEN"
+              required
+            />
+            <label for="seatBeltsGood">BIEN</label>
+            <input
+              type="radio"
+              id="seatBeltsFix"
+              name="seatBelts"
+              value="CORREGIR"
+              required
+            />
+            <label for="seatBeltsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="headrests">Apoya cabezas en todos los asientos:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="headrestsGood"
+              name="headrests"
+              value="BIEN"
+              required
+            />
+            <label for="headrestsGood">BIEN</label>
+            <input
+              type="radio"
+              id="headrestsFix"
+              name="headrests"
+              value="CORREGIR"
+              required
+            />
+            <label for="headrestsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="extinguisher"
+            >Extintor vigente 5kg PQSP ABC según corresponda:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="extinguisherGood"
+              name="extinguisher"
+              value="BIEN"
+              required
+            />
+            <label for="extinguisherGood">BIEN</label>
+            <input
+              type="radio"
+              id="extinguisherFix"
+              name="extinguisher"
+              value="CORREGIR"
+              required
+            />
+            <label for="extinguisherFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="emergencyKit"
+            >Baliza triángulo, Botiquín, Linterna, Cuarta remolque
+            rígida:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="emergencyKitGood"
+              name="emergencyKit"
+              value="BIEN"
+              required
+            />
+            <label for="emergencyKitGood">BIEN</label>
+            <input
+              type="radio"
+              id="emergencyKitFix"
+              name="emergencyKit"
+              value="CORREGIR"
+              required
+            />
+            <label for="emergencyKitFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="interiorCleanliness"
+            >Orden y Limpieza en el interior de la cabina:</label
+          >
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="interiorCleanlinessGood"
+              name="interiorCleanliness"
+              value="BIEN"
+              required
+            />
+            <label for="interiorCleanlinessGood">BIEN</label>
+            <input
+              type="radio"
+              id="interiorCleanlinessFix"
+              name="interiorCleanliness"
+              value="CORREGIR"
+              required
+            />
+            <label for="interiorCleanlinessFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="engineOil">Aceite Motor:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="engineOilGood"
+              name="engineOil"
+              value="BIEN"
+              required
+            />
+            <label for="engineOilGood">BIEN</label>
+            <input
+              type="radio"
+              id="engineOilFix"
+              name="engineOil"
+              value="CORREGIR"
+              required
+            />
+            <label for="engineOilFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="hydraulicOil">Aceite Hidráulico:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="hydraulicOilGood"
+              name="hydraulicOil"
+              value="BIEN"
+              required
+            />
+            <label for="hydraulicOilGood">BIEN</label>
+            <input
+              type="radio"
+              id="hydraulicOilFix"
+              name="hydraulicOil"
+              value="CORREGIR"
+              required
+            />
+            <label for="hydraulicOilFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="coolant">Líquido Refrigerante:</label>
+          <div class="estiloInputs">
+            <input
+              type="radio"
+              id="coolantGood"
+              name="coolant"
+              value="BIEN"
+              required
+            />
+            <label for="coolantGood">BIEN</label>
+            <input
+              type="radio"
+              id="coolantFix"
+              name="coolant"
+              value="CORREGIR"
+              required
+            />
+            <label for="coolantFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <label for="gps">GPS / VIGIA:</label>
+          <div class="estiloInputs">
+            <input type="radio" id="gpsGood" name="gps" value="BIEN" required />
+            <label for="gpsGood">BIEN</label>
+            <input
+              type="radio"
+              id="gpsFix"
+              name="gps"
+              value="CORREGIR"
+              required
+            />
+            <label for="gpsFix">CORREGIR</label>
+          </div>
+          <br /><br />
+          <button type="submit" style="margin-bottom: 2rem">
+            Enviar Inspección
+          </button>
+        </form>
+      </div>
+    </div>
+    <footer class="footer">
+      <p>&copy; 2024 DISTRIGAL S.R.L. - Todos los derechos reservados.</p>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-auth.js"></script>
+    <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+    <script type="module" src="index.8a7d498d.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
