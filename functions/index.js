@@ -22,7 +22,7 @@ exports.sendInspectionEmail = functions.firestore
     const dominio = inspectionData.Vehículo.Dominio;
 
     const mailOptions = {
-      from: "drvillegasrodrigo@gmail.com",
+      from: '"Distrigal Inspecciones" <drvillegasrodrigo@gmail.com>',
       to: "distrigalcheck@gmail.com", // la dirección de correo a la que se enviará el informe
       subject: `Informe de Inspección Vehículo: ${dominio}`,
       text: `Informe de inspección para el vehículo dominio ${dominio}:\n\n${JSON.stringify(
