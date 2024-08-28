@@ -666,9 +666,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const video1 = document.getElementById("video");
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
-        // Solicitar acceso a cualquier cámara disponible (preferentemente la frontal)
+        // Solicitar acceso a la cámara trasera
         videoStream = await navigator.mediaDevices.getUserMedia({
-            video: true
+            video: {
+                facingMode: {
+                    exact: "environment"
+                }
+            }
         });
         video1.srcObject = videoStream;
         video1.addEventListener("play", ()=>{
