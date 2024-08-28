@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
     user: "drvillegasrodrigo@gmail.com", // tu dirección de correo
     pass: "erjnxzethfuntnbr", // tu contraseña de correo (considera usar variables de entorno para seguridad)
   },
-  debug: true, // Habilita la depuración
+  debug: false, // Habilita la depuración
 });
 
 // Utiliza onDocumentCreated para la función de Firestore
@@ -23,13 +23,13 @@ exports.sendInspectionEmail = functions.firestore
 
     const mailOptions = {
       from: '"Distrigal Inspecciones" <drvillegasrodrigo@gmail.com>',
-      to: "distrigalcheck@gmail.com", // la dirección de correo a la que se enviará el informe
+      to: "distrigalcheck@gmail.com",
       subject: `Informe de Inspección Vehículo: ${dominio}`,
-      text: `Informe de inspección para el vehículo dominio ${dominio}:\n\n${JSON.stringify(
-        inspectionData,
-        null,
-        2
-      )}`,
+      html: `
+        <h1>Informe de Inspección</h1>
+        <p>Informe de inspección para el vehículo dominio ${dominio}:</p>
+        <pre>${JSON.stringify(inspectionData, null, 2)}</pre>
+      `,
     };
 
     try {
